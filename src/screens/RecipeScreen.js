@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, ImageBackground } from "react-native";
-import SafeAreaView from "react-native-safe-area-view";
+import { SafeAreaView } from "react-native";
 import { Title, Text, Button, Subheading } from "react-native-paper";
 import { Video } from "expo-av";
 import { ScrollView } from "react-native";

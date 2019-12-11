@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import { ActivityIndicator, Subheading } from "react-native-paper";
-import SafeAreaView from "react-native-safe-area-view";
+import { SafeAreaView } from "react-native";
 import { ScrollView } from "react-native";
 import { useStorage } from "../hooks/useStorage";
 import { Ionicons } from "@expo/vector-icons";

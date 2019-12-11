@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Image, View, StyleSheet, ImageBackground, Button } from "react-native";
-import SafeAreaView from "react-native-safe-area-view";
+import { SafeAreaView } from "react-native";
 import * as Google from "expo-google-app-auth";
 import { Dimensions, PixelRatio } from "react-native";
 import { Text } from "react-native-paper";

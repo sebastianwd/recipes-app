@@ -1,7 +1,12 @@
 import React from "react";
 import { Text, TextInput, Searchbar } from "react-native-paper";
-import SafeAreaView from "react-native-safe-area-view";
-import { FlatList, StyleSheet, View, ImageBackground } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  ImageBackground,
+  SafeAreaView
+} from "react-native";
 import { Entradas, Sopas, Postres, Platos_Fondo } from "../shared/data";
 import {
   Feather,
