@@ -52,10 +52,7 @@ const HomeStack = createStackNavigator(
       screen: RecipeScreen
     },
     Filter: {
-      screen: FilterScreen,
-      navigationOptions: {
-        header: null
-      }
+      screen: FilterScreen
     }
   },
   {

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import * as Font from "expo-font";
+import { AppLoading } from "expo";
 import AppContainer from "./src/shared/navigators";
 import NavigationService from "./src/shared/NavigationService";
 import {
@@ -41,15 +42,24 @@ const theme = {
 };
 
 export default class App extends Component {
-  componentDidMount() {
-    Font.loadAsync({
+  constructor(props) {
+    super(props);
+    this.state = { loading: true };
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
       "gotham-medium": require("./src/assets/fonts/Gotham-Medium.otf"),
       "gotham-bold": require("./src/assets/fonts/Gotham-Bold.otf"),
       "helvetica-neue": require("./src/assets/fonts/HelveticaNeueLTStd-Cn.otf")
     });
+    this.setState({ loading: false });
   }
 
   render() {
+    if (this.state.loading) {
+      return <AppLoading />;
+    }
     return (
       <PaperProvider theme={theme}>
         <AppContainer

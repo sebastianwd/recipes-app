@@ -1,7 +1,8 @@
 export const Entradas = [
   {
     id: 1,
-    image: "http://dummyimage.com/100x100.png/5fa2dd/ffffff",
+    image:
+      "https://res.cloudinary.com/dkfobbwsu/image/upload/v1576040802/causa.jpg",
     video:
       "https://res.cloudinary.com/dkfobbwsu/video/upload/v1575759098/Causa_de_at%C3%BAn.mp4",
     name: "Causa de atún",
@@ -26,9 +27,11 @@ export const Entradas = [
   },
   {
     id: 2,
-    image: "http://dummyimage.com/100x100.png/5fa2dd/ffffff",
-    video: "",
-    name: "Causa de atún",
+    image:
+      "https://res.cloudinary.com/dkfobbwsu/image/upload/v1576040886/Chicharron.jpg",
+    video:
+      "https://res.cloudinary.com/dkfobbwsu/video/upload/v1575759098/Causa_de_at%C3%BAn.mp4",
+    name: "Chicharron",
     ingredients: [
       "3 latas de atún",
       "1 kg. de papa amarilla o rosada.",
@@ -50,9 +53,11 @@ export const Entradas = [
   },
   {
     id: 3,
-    image: "http://dummyimage.com/100x100.png/5fa2dd/ffffff",
-    video: "",
-    name: "Causa de atún",
+    image:
+      "https://res.cloudinary.com/dkfobbwsu/image/upload/v1576040998/Nuggets.jpg",
+    video:
+      "https://res.cloudinary.com/dkfobbwsu/video/upload/v1575759098/Causa_de_at%C3%BAn.mp4",
+    name: "Nuggets",
     ingredients: [
       "3 latas de atún",
       "1 kg. de papa amarilla o rosada.",
@@ -74,9 +79,10 @@ export const Entradas = [
   },
   {
     id: 4,
-    image: "http://dummyimage.com/100x100.png/5fa2dd/ffffff",
+    image:
+      "https://res.cloudinary.com/dkfobbwsu/image/upload/v1576041001/omelette.jpg",
     video: "",
-    name: "Causa de atún",
+    name: "Omelet",
     ingredients: [
       "3 latas de atún",
       "1 kg. de papa amarilla o rosada.",
@@ -98,9 +104,10 @@ export const Entradas = [
   },
   {
     id: 5,
-    image: "http://dummyimage.com/100x100.png/5fa2dd/ffffff",
+    image:
+      "https://res.cloudinary.com/dkfobbwsu/image/upload/v1576040886/Chicharron.jpg",
     video: "",
-    name: "Causa de atún",
+    name: "Papas fritas",
     ingredients: [
       "3 latas de atún",
       "1 kg. de papa amarilla o rosada.",
