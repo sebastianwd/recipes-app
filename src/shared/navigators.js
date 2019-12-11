@@ -10,6 +10,35 @@ import { SearchScreen } from "../screens/SearchScreen";
 import { RecipeScreen } from "../screens/RecipeScreen";
 import { TipsScreen } from "../screens/TipsScreen";
 import BottomNav from "../components/ui/BottomNav";
+import { ProfileScreen } from "../screens/ProfileScreen";
+import { SettingsScreen } from "../screens/SettingsScreen";
+import { FilterScreen } from "../screens/FilterScreen";
+
+const ProfileStack = createStackNavigator(
+  {
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
+    Settings: {
+      screen: SettingsScreen
+    }
+  },
+  {
+    initialRouteName: "Profile",
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: "#26263d"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        fontWeight: "bold"
+      }
+    }
+  }
+);
 
 const HomeStack = createStackNavigator(
   {
@@ -21,6 +50,12 @@ const HomeStack = createStackNavigator(
     },
     Recipe: {
       screen: RecipeScreen
+    },
+    Filter: {
+      screen: FilterScreen,
+      navigationOptions: {
+        header: null
+      }
     }
   },
   {
@@ -69,6 +104,18 @@ const AppStack = createBottomTabNavigator(
         tabBarIcon: ({ focused }) => (
           <MaterialIcon
             name={"lightbulb-outline"}
+            size={24}
+            color={`${focused ? "black" : "gray"}`}
+          />
+        )
+      }
+    },
+    Profile: {
+      screen: ProfileStack,
+      navigationOptions: {
+        tabBarIcon: ({ focused }) => (
+          <MaterialIcon
+            name={"account"}
             size={24}
             color={`${focused ? "black" : "gray"}`}
           />

@@ -1,9 +1,13 @@
-import React from "react";
-import { Image, View, StyleSheet, ImageBackground } from "react-native";
-import { Button } from "react-native-paper";
+import React, { useEffect } from "react";
+import { Image, View, StyleSheet, ImageBackground, Button } from "react-native";
 import SafeAreaView from "react-native-safe-area-view";
 import * as Google from "expo-google-app-auth";
+import { Dimensions, PixelRatio } from "react-native";
+import { Text } from "react-native-paper";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useStorage } from "../hooks/useStorage";
 
+const { width, height } = Dimensions.get("window");
 const GOOGLE_CLIENT_ID =
   "813132219893-tiba195d7sm5i416tbtbq51hkp02gg1a.apps.googleusercontent.com";
 
@@ -12,10 +16,21 @@ const IOS_CLIENT_ID =
 
 export const SignInScreen = props => {
   const { navigation } = props;
-  navigation.navigate("App");
+  const { storage } = useStorage();
+
+  // navigation.navigate("App");
   const goHome = () => {
     navigation.navigate("App");
   };
+
+  // useEffect(() => {}, []);
+
+  (async () => {
+    const user = await storage.get("user");
+    if (user) {
+      goHome();
+    }
+  })();
 
   async function signInWithGoogleAsync() {
     try {
@@ -37,25 +52,41 @@ export const SignInScreen = props => {
   }
   const googleLogIn = async () => {
     const result = await signInWithGoogleAsync();
-    console.log(result);
+    await storage.set("user", {
+      id: result.user.id,
+      email: result.user.email,
+      name: result.user.name
+    });
     goHome();
   };
 
   return (
-    <SafeAreaView>
-      <View style={styles.imgContainer}>
-        <ImageBackground
-          source={require("./img/logo.jpg")}
-          style={{
-            width: "100%",
-            height: "100%"
-          }}
-          resizeMode={"contain"}></ImageBackground>
+    <SafeAreaView style={{ position: "relative" }}>
+      <View>
+        <View style={styles.imgContainer}>
+          <ImageBackground
+            source={require("./img/chef_peruano.png")}
+            style={{
+              height: 90
+            }}
+            resizeMode={"contain"}></ImageBackground>
+        </View>
+        <TouchableOpacity style={styles.loginButton} onPress={googleLogIn}>
+          <Text> Iniciar sesión con Facebook</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.loginButton} onPress={googleLogIn}>
+          <Text> Iniciar sesión con Google</Text>
+        </TouchableOpacity>
       </View>
-      <Button mode={"outlined"}>Iniciar sesión con Facebook</Button>
-      <Button mode={"outlined"} onPress={googleLogIn}>
-        Iniciar sesión con Google
-      </Button>
+      <ImageBackground
+        source={require("./img/portada.png")}
+        style={{
+          width: width,
+          height: height,
+          position: "absolute",
+          zIndex: -1
+        }}
+        resizeMode={"contain"}></ImageBackground>
     </SafeAreaView>
   );
 };
@@ -63,7 +94,21 @@ export const SignInScreen = props => {
 const styles = StyleSheet.create({
   imgContainer: {
     alignSelf: "center",
+    justifyContent: "flex-end",
     width: "100%",
-    height: 280
+    height: 280,
+    marginBottom: 80
+  },
+  loginButton: {
+    margin: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 4,
+    width: 240,
+    alignItems: "center",
+    alignSelf: "center",
+    borderColor: "black",
+    borderWidth: 1.5,
+    borderRightWidth: 4,
+    borderBottomWidth: 5
   }
 });

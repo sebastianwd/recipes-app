@@ -1,10 +1,10 @@
 import React from "react";
-import { Text, Button } from "react-native-paper";
+import { Text, TextInput, Searchbar } from "react-native-paper";
 import SafeAreaView from "react-native-safe-area-view";
 import { FlatList, StyleSheet, View, ImageBackground } from "react-native";
 import { Entradas, Sopas, Postres, Platos_Fondo } from "../shared/data";
 import { Feather } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import NavigationService from "../shared/NavigationService";
 
 const FoodItem = ({ item }) => {
@@ -33,67 +33,74 @@ const FoodItem = ({ item }) => {
 };
 
 export const HomeScreen = props => {
+  const handleFocus = () => {
+    NavigationService.navigate("Filter");
+  };
   return (
     <SafeAreaView>
-      <Text>Entradas</Text>
-      <View style={{ flexDirection: "row" }}>
-        <FlatList
-          style={{ width: "95%" }}
-          horizontal={true}
-          data={Entradas}
-          renderItem={FoodItem}
-          keyExtractor={item => String(item.id)}
+      <ScrollView>
+        <Searchbar
+          placeholder='Buscar'
+          onFocus={handleFocus}
+          style={styles.input}
         />
-        <Feather
-          name={"chevrons-right"}
-          size={24}
-          style={{ alignSelf: "center" }}></Feather>
-      </View>
-      <Text>Sopas</Text>
-      <View style={{ flexDirection: "row" }}>
-        <FlatList
-          style={{ width: "95%" }}
-          horizontal={true}
-          data={Sopas}
-          renderItem={FoodItem}
-          keyExtractor={item => String(item.id)}
-        />
-        <Feather
-          name={"chevrons-right"}
-          size={24}
-          style={{ alignSelf: "center" }}></Feather>
-      </View>
-      <Text>Platos de Fondo</Text>
-      <View style={{ flexDirection: "row" }}>
-        <FlatList
-          style={{ width: "95%" }}
-          horizontal={true}
-          data={Platos_Fondo}
-          renderItem={FoodItem}
-          keyExtractor={item => String(item.id)}
-        />
-        <Feather
-          name={"chevrons-right"}
-          size={24}
-          style={{ alignSelf: "center" }}></Feather>
-      </View>
-      <Text>Postres</Text>
-      <View style={{ flexDirection: "row" }}>
-        <FlatList
-          style={{ width: "95%" }}
-          horizontal={true}
-          data={Postres}
-          renderItem={FoodItem}
-          keyExtractor={item => String(item.id)}
-        />
-        <Feather
-          name={"chevrons-right"}
-          size={24}
-          style={{ alignSelf: "center" }}></Feather>
-      </View>
-      <Button onPress={() => props.navigation.navigate("Auth")}>
-        Sign out
-      </Button>
+        <Text>Entradas</Text>
+        <View style={{ flexDirection: "row" }}>
+          <FlatList
+            style={{ width: "95%" }}
+            horizontal={true}
+            data={Entradas}
+            renderItem={FoodItem}
+            keyExtractor={item => String(item.id)}
+          />
+          <Feather
+            name={"chevrons-right"}
+            size={24}
+            style={{ alignSelf: "center" }}></Feather>
+        </View>
+        <Text>Sopas</Text>
+        <View style={{ flexDirection: "row" }}>
+          <FlatList
+            style={{ width: "95%" }}
+            horizontal={true}
+            data={Sopas}
+            renderItem={FoodItem}
+            keyExtractor={item => String(item.id)}
+          />
+          <Feather
+            name={"chevrons-right"}
+            size={24}
+            style={{ alignSelf: "center" }}></Feather>
+        </View>
+        <Text>Platos de Fondo</Text>
+        <View style={{ flexDirection: "row" }}>
+          <FlatList
+            style={{ width: "95%" }}
+            horizontal={true}
+            data={Platos_Fondo}
+            renderItem={FoodItem}
+            keyExtractor={item => String(item.id)}
+          />
+          <Feather
+            name={"chevrons-right"}
+            size={24}
+            style={{ alignSelf: "center" }}></Feather>
+        </View>
+        <Text>Postres</Text>
+        <View style={{ flexDirection: "row" }}>
+          <FlatList
+            style={{ width: "95%" }}
+            horizontal={true}
+            data={Postres}
+            renderItem={FoodItem}
+            keyExtractor={item => String(item.id)}
+          />
+          <Feather
+            name={"chevrons-right"}
+            size={24}
+            style={{ alignSelf: "center" }}></Feather>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -103,5 +110,11 @@ const styles = StyleSheet.create({
     width: 110,
     height: 110,
     marginRight: 10
+  },
+  input: {
+    marginHorizontal: 10,
+    marginTop: 18,
+    marginBottom: 10,
+    height: 40
   }
 });
