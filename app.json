@@ -8,12 +8,10 @@
     "sdkVersion": "36.0.0",
     "version": "1.0.0",
     "entryPoint": "node_modules/expo/AppEntry.js",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "platforms": ["ios", "android", "web"],
     "description": "",
-    "githubUrl": "https://github.com/sebastianwd/recipes-app"
+    "githubUrl": "https://github.com/sebastianwd/recipes-app",
+    "facebookAppId": "1645156452287489",
+    "facebookDisplayName": "Recetas Daewoo"
   }
 }

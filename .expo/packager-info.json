@@ -2,9 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 5908,
-  "expoServerNgrokUrl": "https://xr-h8p.kodoku.recetas.exp.direct",
-  "packagerNgrokUrl": "https://packager.xr-h8p.kodoku.recetas.exp.direct",
-  "ngrokPid": 8044,
+  "packagerPid": 4320,
+  "expoServerNgrokUrl": "https://xr-h8p.anonymous.recetas.exp.direct",
+  "packagerNgrokUrl": "https://packager.xr-h8p.anonymous.recetas.exp.direct",
+  "ngrokPid": 12700,
   "webpackServerPort": null
 }

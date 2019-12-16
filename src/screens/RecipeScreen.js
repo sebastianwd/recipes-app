@@ -1,36 +1,83 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, ImageBackground } from "react-native";
 import { SafeAreaView } from "react-native";
 import { Title, Text, Button, Subheading } from "react-native-paper";
 import { Video } from "expo-av";
-import { ScrollView } from "react-native";
+import { ScrollView, Share } from "react-native";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import { FlatList } from "react-native";
-import { Microondas } from "../shared/data";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import NavigationService from "../shared/NavigationService";
+import { Microondas, recetas } from "../shared/data";
+import {
+  TouchableOpacity,
+  TouchableHighlight
+} from "react-native-gesture-handler";
+import { pickRandom } from "../shared/util";
+import { ProductItem } from "../components/ProductItem";
+import { FoodItem } from "../components/FoodItem";
+import { useFavorites } from "../hooks/useFavorites";
+import { ToastAndroid } from "react-native";
 
-const ProductItem = ({ item }) => {
-  const handlePress = () => {
-    NavigationService.navigate("Product", { item });
+const ShareButton = props => {
+  const { shareItem } = props;
+
+  const shareRecipe = async () => {
+    try {
+      await Share.share({
+        message: `Mira la receta para ${shareItem.name} en el siguiente link: ${shareItem.video}`
+      });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (
-    <TouchableOpacity onPress={handlePress}>
-      <View style={{ flexDirection: "column" }}>
-        <View style={styles.imgContainer}>
-          <ImageBackground
-            source={{ uri: item.image }}
-            style={{
-              width: "100%",
-              height: "100%"
-            }}
-            resizeMode={"contain"}></ImageBackground>
-        </View>
-        <Text style={{ textAlign: "center", marginRight: 10 }}>
-          {item.name}
-        </Text>
-      </View>
+    <TouchableOpacity onPress={shareRecipe}>
+      <Ionicons name='md-share' size={32} color='white' />
+    </TouchableOpacity>
+  );
+};
+
+const FavoriteButton = ({ favoriteItem }) => {
+  const { addFavorite, findFavorite, removeFavorite } = useFavorites();
+
+  const [isFavorite, setFavorite] = useState(false);
+
+  const checkIsFavorite = async () => {
+    const favorite = await findFavorite(favoriteItem.id);
+    if (favorite) {
+      setFavorite(true);
+    }
+  };
+
+  useEffect(() => {
+    checkIsFavorite();
+  }, []);
+
+  const addToFavorites = async () => {
+    await addFavorite(favoriteItem);
+    setFavorite(true);
+    await checkIsFavorite();
+    ToastAndroid.show("Añadido a favoritos", ToastAndroid.SHORT);
+  };
+
+  const removeFromFavorites = async () => {
+    setFavorite(false);
+    await removeFavorite(favoriteItem.id);
+    ToastAndroid.show(
+      "Se removió esta receta de tus favoritos",
+      ToastAndroid.SHORT
+    );
+  };
+
+  return (
+    <TouchableOpacity
+      onPress={isFavorite ? removeFromFavorites : addToFavorites}>
+      <Ionicons
+        style={{ marginHorizontal: 14 }}
+        name={`${isFavorite ? "md-heart" : "md-heart-empty"}`}
+        size={32}
+        color='white'
+      />
     </TouchableOpacity>
   );
 };
@@ -39,6 +86,14 @@ const RecipeScreen = props => {
   const { navigation } = props;
 
   const foodItem = navigation.getParam("item", "");
+
+  const recipesOfType = recetas.filter(x => x.type === foodItem.type);
+
+  const filteredSuggestions = recipesOfType.filter(recipe => {
+    return recipe.id !== foodItem.id;
+  });
+
+  const suggestedRecipes = pickRandom(filteredSuggestions, 4);
 
   return (
     <SafeAreaView>
@@ -55,7 +110,14 @@ const RecipeScreen = props => {
           />
         </View>
         <Title>Ingredientes</Title>
-        <Text>Para ## personas</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={{ fontSize: 12 }}>
+            Para {foodItem.quantity} personas
+          </Text>
+          <Text style={{ fontSize: 12, marginLeft: "auto" }}>
+            Tiempo de preparación: {foodItem.time} minutos
+          </Text>
+        </View>
         <View style={styles.ingredientesContainer}>
           {foodItem.ingredients &&
             foodItem.ingredients.map((item, index) => {
@@ -63,15 +125,31 @@ const RecipeScreen = props => {
             })}
         </View>
         <Title>Preparación</Title>
-        <Text>{foodItem.recipe}</Text>
-
-        <Subheading>Hornos microondas</Subheading>
+        {Array.isArray(foodItem.recipe) &&
+          foodItem.recipe.map((item, index) => {
+            return <Text key={index}>. {item}</Text>;
+          })}
+        <Subheading style={{ marginTop: 12 }}>Hornos microondas</Subheading>
         <View style={{ flexDirection: "row" }}>
           <FlatList
             style={{ width: "95%" }}
             horizontal={true}
             data={Microondas[foodItem.name]}
             renderItem={ProductItem}
+            keyExtractor={item => String(item.id)}
+          />
+          <Feather
+            name={"chevrons-right"}
+            size={24}
+            style={{ alignSelf: "center" }}></Feather>
+        </View>
+        <Subheading style={{ marginTop: 12 }}>Recetas sugeridas</Subheading>
+        <View style={{ flexDirection: "row", marginBottom: 28 }}>
+          <FlatList
+            style={{ width: "95%" }}
+            horizontal={true}
+            data={suggestedRecipes}
+            renderItem={FoodItem}
             keyExtractor={item => String(item.id)}
           />
           <Feather
@@ -104,18 +182,14 @@ const styles = StyleSheet.create({
 
 RecipeScreen.navigationOptions = ({ navigation }) => {
   const foodItem = navigation.getParam("item", "");
+
   return {
     title: foodItem.name,
     headerRight: () => {
       return (
         <>
-          <Ionicons name='md-share' size={32} color='white' />
-          <Ionicons
-            style={{ marginHorizontal: 14 }}
-            name='md-heart'
-            size={32}
-            color='white'
-          />
+          <ShareButton shareItem={foodItem}></ShareButton>
+          <FavoriteButton favoriteItem={foodItem}></FavoriteButton>
         </>
       );
     }

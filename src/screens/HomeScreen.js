@@ -1,49 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Text, TextInput, Searchbar } from "react-native-paper";
-import {
-  FlatList,
-  StyleSheet,
-  View,
-  ImageBackground,
-  SafeAreaView
-} from "react-native";
-import { Entradas, Sopas, Postres, Platos_Fondo } from "../shared/data";
+import { FlatList, StyleSheet, View, ImageBackground } from "react-native";
+import { recetas } from "../shared/data";
 import {
   Feather,
   MaterialCommunityIcons as MaterialIcon
 } from "@expo/vector-icons";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import NavigationService from "../shared/NavigationService";
+import { SafeAreaView } from "react-navigation";
+import { FoodItem } from "../components/FoodItem";
+import { useFavorites } from "../hooks/useFavorites";
+import { useStorage } from "../hooks/useStorage";
+import { useTagFilters } from "../hooks/useTagFilters";
+import { withNavigationFocus } from "react-navigation";
 
-const FoodItem = ({ item }) => {
-  const handlePress = () => {
-    NavigationService.navigate("Recipe", { item });
-  };
+const HomeScreen = ({ isFocused }) => {
+  const { getFavorites } = useFavorites();
+  const { getTagFilters } = useTagFilters();
+  const { storage } = useStorage();
 
-  return (
-    <TouchableOpacity onPress={handlePress}>
-      <View style={{ flexDirection: "column" }}>
-        <View style={styles.imgContainer}>
-          <ImageBackground
-            source={{ uri: item.image }}
-            style={{
-              width: "100%",
-              height: "100%"
-            }}
-            resizeMode={"contain"}></ImageBackground>
-        </View>
-        <Text style={{ textAlign: "center", marginRight: 10 }}>
-          {item.name}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
+  const [filtersNumber, setFiltersNumber] = useState(0);
 
-export const HomeScreen = props => {
+  useEffect(() => {
+    (async () => {
+      const filters = await getTagFilters();
+      if (!filters) {
+        storage.set("filters", []);
+        return;
+      }
+      setFiltersNumber(filters.length);
+      const favorites = await getFavorites();
+      if (!favorites) {
+        storage.set("favorites", []);
+      }
+    })();
+  }, [isFocused]);
   const handlePress = () => {
     NavigationService.navigate("Filter");
   };
+
+  const Entradas = recetas.filter(x => x.type === "entrada");
+  const Sopas = recetas.filter(x => x.type === "sopa");
+  const Postres = recetas.filter(x => x.type === "postre");
+  const Platos_Fondo = recetas.filter(x => x.type === "fondo");
+
   return (
     <SafeAreaView>
       <ScrollView style={{ position: "relative" }}>
@@ -54,6 +55,9 @@ export const HomeScreen = props => {
           </TouchableOpacity>
         </View>
         <View style={{ paddingLeft: 6 }}>
+          {filtersNumber > 0 && (
+            <Text>{filtersNumber} filtro(s) activo(s)</Text>
+          )}
           <Text>Entradas</Text>
           <View style={{ flexDirection: "row" }}>
             <FlatList
@@ -122,12 +126,6 @@ export const HomeScreen = props => {
   );
 };
 const styles = StyleSheet.create({
-  imgContainer: {
-    alignSelf: "center",
-    width: 120,
-    height: 104,
-    marginRight: 10
-  },
   input: {
     marginHorizontal: 10,
     marginTop: 18,
@@ -136,3 +134,5 @@ const styles = StyleSheet.create({
     width: "84%"
   }
 });
+
+export default withNavigationFocus(HomeScreen);

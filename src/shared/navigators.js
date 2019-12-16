@@ -2,7 +2,7 @@ import React from "react";
 import { createSwitchNavigator, createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { SignInScreen } from "../screens/SignInScreen";
-import { HomeScreen } from "../screens/HomeScreen";
+import HomeScreen from "../screens/HomeScreen";
 import { AuthLoadingScreen } from "../screens/AuthLoadingScreen";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { MaterialCommunityIcons as MaterialIcon } from "@expo/vector-icons";
@@ -13,6 +13,7 @@ import BottomNav from "../components/ui/BottomNav";
 import { ProfileScreen } from "../screens/ProfileScreen";
 import { SettingsScreen } from "../screens/SettingsScreen";
 import { FilterScreen } from "../screens/FilterScreen";
+import { FavoritesScreen } from "../screens/FavoritesScreen";
 
 const ProfileStack = createStackNavigator(
   {
@@ -74,21 +75,24 @@ const AppStack = createBottomTabNavigator(
     Home: {
       screen: HomeStack,
       navigationOptions: {
+        title: "Buscar",
         tabBarIcon: ({ focused }) => (
           <MaterialIcon
-            name={"home"}
+            name={"magnify"}
             size={24}
             color={`${focused ? "black" : "gray"}`}
           />
         )
       }
     },
-    Search: {
-      screen: SearchScreen,
+
+    Favorites: {
+      screen: FavoritesScreen,
       navigationOptions: {
+        title: "Favoritos",
         tabBarIcon: ({ focused }) => (
           <MaterialIcon
-            name={"magnify"}
+            name={"heart"}
             size={24}
             color={`${focused ? "black" : "gray"}`}
           />
@@ -110,6 +114,7 @@ const AppStack = createBottomTabNavigator(
     Profile: {
       screen: ProfileStack,
       navigationOptions: {
+        title: "Perfil",
         tabBarIcon: ({ focused }) => (
           <MaterialIcon
             name={"account"}

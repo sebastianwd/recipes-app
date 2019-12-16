@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, memo, Fragment, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import {
   ActivityIndicator,
@@ -12,49 +12,56 @@ import { ScrollView } from "react-native";
 import { useStorage } from "../hooks/useStorage";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Tags } from "../shared/data/tags";
+import { useTagFilters } from "../hooks/useTagFilters";
+
+const ChipItem = memo(props => {
+  const { item } = props;
+  const { addTagFilter, findTagFilter, removeTagFilter } = useTagFilters();
+  const [isActive, setActive] = useState(false);
+
+  const addFilter = async () => {
+    setActive(true);
+    await addTagFilter(item);
+  };
+
+  const removeFilter = async () => {
+    setActive(false);
+    await removeTagFilter(item.id);
+  };
+
+  (async () => {
+    const found = await findTagFilter(item.id);
+    setActive(!!found);
+  })();
+
+  return (
+    <TouchableOpacity onPress={() => (isActive ? removeFilter() : addFilter())}>
+      <Chip key={item.id} style={isActive ? styles.activeChip : styles.chip}>
+        {item.name}
+        {isActive && "   X"}
+      </Chip>
+    </TouchableOpacity>
+  );
+});
 
 const FilterScreen = () => {
   return (
     <SafeAreaView>
       <ScrollView>
         <View style={{ paddingHorizontal: 12, marginVertical: 12 }}>
-          <Subheading>Dificultad</Subheading>
-          <View style={styles.chipContainer}>
-            <Chip style={styles.chip}>Menos de 15 minutos</Chip>
-            <Chip style={styles.chip}>Fácil</Chip>
-            <Chip style={styles.chip}>Con 5 ingredientes</Chip>
-          </View>
-          <Subheading>Comida</Subheading>
-          <View style={styles.chipContainer}>
-            <Chip style={styles.chip}>Desayunos</Chip>
-            <Chip style={styles.chip}>Almuerzo</Chip>
-            <Chip style={styles.chip}>Aperitivos</Chip>
-            <Chip style={styles.chip}>Postres</Chip>
-            <Chip style={styles.chip}>Cena</Chip>
-            <Chip style={styles.chip}>Snacks</Chip>
-          </View>
-          <Subheading>Ocasión</Subheading>
-          <View style={styles.chipContainer}>
-            <Chip style={styles.chip}>BBQ</Chip>
-            <Chip style={styles.chip}>Brunch</Chip>
-            <Chip style={styles.chip}>Casual</Chip>
-            <Chip style={styles.chip}>Ocasión especial</Chip>
-            <Chip style={styles.chip}>Cena de noche</Chip>
-          </View>
-          <Subheading>Estilo de plato</Subheading>
-          <View style={styles.chipContainer}>
-            <Chip style={styles.chip}>Internacional</Chip>
-            <Chip style={styles.chip}>Comida criolla</Chip>
-            <Chip style={styles.chip}>Fusión</Chip>
-            <Chip style={styles.chip}>Peruana</Chip>
-          </View>
-          <Subheading>Dieta</Subheading>
-          <View style={styles.chipContainer}>
-            <Chip style={styles.chip}>Example Chip</Chip>
-            <Chip style={styles.chip}>Example Chip</Chip>
-            <Chip style={styles.chip}>Example Chip</Chip>
-            <Chip style={styles.chip}>Example Chip</Chip>
-          </View>
+          {Tags.map(tag => {
+            return (
+              <Fragment key={tag.title}>
+                <Subheading>{tag.title}</Subheading>
+                <View style={styles.chipContainer}>
+                  {tag.items.map(item => {
+                    return <ChipItem key={item.id} item={item}></ChipItem>;
+                  })}
+                </View>
+              </Fragment>
+            );
+          })}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -71,6 +78,12 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     margin: 4,
     paddingVertical: 4
+  },
+  activeChip: {
+    alignSelf: "flex-start",
+    margin: 4,
+    paddingVertical: 4,
+    backgroundColor: "salmon"
   },
   chipContainer: {
     flexDirection: "row",

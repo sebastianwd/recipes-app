@@ -6,6 +6,7 @@ import { Dimensions, PixelRatio } from "react-native";
 import { Text } from "react-native-paper";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useStorage } from "../hooks/useStorage";
+import * as Facebook from "expo-facebook";
 
 const { width, height } = Dimensions.get("window");
 const GOOGLE_CLIENT_ID =
@@ -23,16 +24,16 @@ export const SignInScreen = props => {
     navigation.navigate("App");
   };
 
-  // useEffect(() => {}, []);
+  useEffect(() => {
+    (async () => {
+      const user = await storage.get("user");
+      if (user) {
+        goHome();
+      }
+    })();
+  }, []);
 
-  (async () => {
-    const user = await storage.get("user");
-    if (user) {
-      goHome();
-    }
-  })();
-
-  async function signInWithGoogleAsync() {
+  const signInWithGoogleAsync = async () => {
     try {
       const result = await Google.logInAsync({
         androidClientId: GOOGLE_CLIENT_ID,
@@ -49,13 +50,49 @@ export const SignInScreen = props => {
     } catch (e) {
       return { error: true };
     }
-  }
+  };
   const googleLogIn = async () => {
     const result = await signInWithGoogleAsync();
     await storage.set("user", {
       id: result.user.id,
       email: result.user.email,
       name: result.user.name
+    });
+    goHome();
+  };
+
+  const signInWithFacebookAsync = async () => {
+    try {
+      await Facebook.initializeAsync("1645156452287489");
+      const {
+        type,
+        token,
+        expires,
+        permissions,
+        declinedPermissions
+      } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ["public_profile", "email"]
+      });
+      if (type === "success") {
+        // Get the user's name using Facebook's Graph API
+        const response = await fetch(
+          `https://graph.facebook.com/me?access_token=${token}&fields=name,email`
+        );
+        return await response.json();
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  };
+
+  const facebookLogIn = async () => {
+    const result = await signInWithFacebookAsync();
+    await storage.set("user", {
+      id: result.id,
+      email: result.email,
+      name: result.name
     });
     goHome();
   };
@@ -71,7 +108,7 @@ export const SignInScreen = props => {
             }}
             resizeMode={"contain"}></ImageBackground>
         </View>
-        <TouchableOpacity style={styles.loginButton} onPress={googleLogIn}>
+        <TouchableOpacity style={styles.loginButton} onPress={facebookLogIn}>
           <Text> Iniciar sesión con Facebook</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.loginButton} onPress={googleLogIn}>
