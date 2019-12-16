@@ -522,7 +522,7 @@ export const recetas = [
   {
     id: 18,
     image:
-      "https://res.cloudinary.com/dkfobbwsu/image/upload/v1576468399/Tarta_de_manzana.jpg",
+      "https://res.cloudinary.com/dkfobbwsu/image/upload/v1576469440/Tarta_de_manzana-min.jpg",
     video:
       "https://res.cloudinary.com/dkfobbwsu/video/upload/v1575759098/Causa_de_at%C3%BAn.mp4",
     name: "Tarta de manzana",
