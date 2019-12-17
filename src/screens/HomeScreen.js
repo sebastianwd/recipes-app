@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Text, TextInput, Searchbar } from "react-native-paper";
-import { FlatList, StyleSheet, View, ImageBackground } from "react-native";
+import { FlatList, StyleSheet, View, Dimensions } from "react-native";
 import { recetas } from "../shared/data";
 import {
   Feather,
@@ -14,6 +14,27 @@ import { useFavorites } from "../hooks/useFavorites";
 import { useStorage } from "../hooks/useStorage";
 import { useTagFilters } from "../hooks/useTagFilters";
 import { withNavigationFocus } from "react-navigation";
+import Carousel from "react-native-snap-carousel";
+
+const { width, height } = Dimensions.get("window");
+
+const renderCarousel = data => (
+  <Carousel
+    data={data}
+    renderItem={FoodItem}
+    sliderWidth={width}
+    itemWidth={176}
+    inactiveSlideScale={0.9}
+    inactiveSlideOpacity={0.8}
+    activeSlideAlignment={"start"}
+    containerCustomStyle={styles.slider}
+    contentContainerCustomStyle={styles.sliderContentContainer}
+    activeAnimationType={"spring"}
+    enableMomentum={true}
+    decelerationRate={0.9}
+    enableSnap={false}
+  />
+);
 
 const HomeScreen = ({ isFocused }) => {
   const { getFavorites } = useFavorites();
@@ -60,13 +81,7 @@ const HomeScreen = ({ isFocused }) => {
           )}
           <Text>Entradas</Text>
           <View style={{ flexDirection: "row" }}>
-            <FlatList
-              style={{ width: "95%" }}
-              horizontal={true}
-              data={Entradas}
-              renderItem={FoodItem}
-              keyExtractor={item => String(item.id)}
-            />
+            {renderCarousel(Entradas)}
             <Feather
               name={"chevrons-right"}
               size={24}
@@ -76,13 +91,7 @@ const HomeScreen = ({ isFocused }) => {
         <View style={{ paddingLeft: 6 }}>
           <Text>Sopas</Text>
           <View style={{ flexDirection: "row" }}>
-            <FlatList
-              style={{ width: "95%" }}
-              horizontal={true}
-              data={Sopas}
-              renderItem={FoodItem}
-              keyExtractor={item => String(item.id)}
-            />
+            {renderCarousel(Sopas)}
             <Feather
               name={"chevrons-right"}
               size={24}
@@ -92,13 +101,7 @@ const HomeScreen = ({ isFocused }) => {
         <View style={{ paddingLeft: 6 }}>
           <Text>Platos de Fondo</Text>
           <View style={{ flexDirection: "row" }}>
-            <FlatList
-              style={{ width: "95%" }}
-              horizontal={true}
-              data={Platos_Fondo}
-              renderItem={FoodItem}
-              keyExtractor={item => String(item.id)}
-            />
+            {renderCarousel(Platos_Fondo)}
             <Feather
               name={"chevrons-right"}
               size={24}
@@ -108,13 +111,7 @@ const HomeScreen = ({ isFocused }) => {
         <View style={{ paddingLeft: 6 }}>
           <Text>Postres</Text>
           <View style={{ flexDirection: "row" }}>
-            <FlatList
-              style={{ width: "95%" }}
-              horizontal={true}
-              data={Postres}
-              renderItem={FoodItem}
-              keyExtractor={item => String(item.id)}
-            />
+            {renderCarousel(Postres)}
             <Feather
               name={"chevrons-right"}
               size={24}
@@ -132,6 +129,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     height: 40,
     width: "84%"
+  },
+  surface: {
+    padding: 8,
+    elevation: 4
+  },
+  slider: {
+    marginTop: 15,
+    overflow: "visible" // for custom animations
+  },
+  sliderContentContainer: {
+    paddingVertical: 10 // for custom animation
   }
 });
 

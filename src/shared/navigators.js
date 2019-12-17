@@ -13,7 +13,7 @@ import BottomNav from "../components/ui/BottomNav";
 import { ProfileScreen } from "../screens/ProfileScreen";
 import { SettingsScreen } from "../screens/SettingsScreen";
 import { FilterScreen } from "../screens/FilterScreen";
-import { FavoritesScreen } from "../screens/FavoritesScreen";
+import FavoritesScreen from "../screens/FavoritesScreen";
 
 const ProfileStack = createStackNavigator(
   {
@@ -70,6 +70,32 @@ const HomeStack = createStackNavigator(
   }
 );
 
+const FavoritesStack = createStackNavigator(
+  {
+    Favorites: {
+      screen: FavoritesScreen,
+      navigationOptions: {
+        header: null
+      }
+    },
+    Recipe: {
+      screen: RecipeScreen
+    }
+  },
+  {
+    initialRouteName: "Favorites",
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: "#26263d"
+      },
+      headerTintColor: "#fff",
+      headerTitleStyle: {
+        fontWeight: "bold"
+      }
+    }
+  }
+);
+
 const AppStack = createBottomTabNavigator(
   {
     Home: {
@@ -85,9 +111,8 @@ const AppStack = createBottomTabNavigator(
         )
       }
     },
-
     Favorites: {
-      screen: FavoritesScreen,
+      screen: FavoritesStack,
       navigationOptions: {
         title: "Favoritos",
         tabBarIcon: ({ focused }) => (
