@@ -35,8 +35,8 @@ const theme = {
   mode: "exact",
   colors: {
     ...DefaultTheme.colors,
-    primary: "#26263d",
-    accent: "tomato"
+    primary: "#E67165",
+    accent: "#E67165"
   },
   fonts: configureFonts(fontConfig)
 };

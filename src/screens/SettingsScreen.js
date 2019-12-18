@@ -18,6 +18,9 @@ import { Linking } from "expo";
 const SettingsScreen = props => {
   const { navigation } = props;
   const { storage } = useStorage();
+
+  const [settings, setSettings] = useState({});
+
   const sendMail = () => {
     Linking.openURL("mailto:contactos@dwe.com.pe?subject=App&body=Hola,");
   };
@@ -25,9 +28,23 @@ const SettingsScreen = props => {
     Linking.openURL("tel://017167700");
   };
 
+  useEffect(() => {
+    (async () => {
+      setSettings({ isAutoplay: await storage.get("autoplay") });
+    })();
+  }, []);
+
   const signOut = async () => {
     await storage.remove("user");
     navigation.navigate("Auth");
+  };
+
+  const setAutoplay = async () => {
+    await storage.set("autoplay", !settings.isAutoplay);
+
+    setSettings(prevState => {
+      return { ...prevState, isAutoplay: !prevState.isAutoplay };
+    });
   };
 
   return (
@@ -37,7 +54,14 @@ const SettingsScreen = props => {
         <List.Item
           title='Reproducción automática de videos'
           style={styles.item}
-          right={props => <RadioButton value='first' status={"checked"} />}
+          onPress={setAutoplay}
+          right={props => (
+            <RadioButton
+              value='first'
+              onPress={setAutoplay}
+              status={settings.isAutoplay ? "checked" : "unchecked"}
+            />
+          )}
         />
         <List.Item
           title='Restricciones de dieta'

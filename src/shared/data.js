@@ -28,7 +28,8 @@ export const recetas = [
       "Para el relleno, mezclar en otro recipiente el atún, la cebolla y las aceitunas picadas.",
       "En el recipiente donde se armará la causa, colocar una parte de la masa de papa como base, colocar el relleno y cubrir con la masa restante.",
       "Para decorar, rallar el huevo cocido sobre la causa y terminar espolvoreando con perejil picado finamente."
-    ]
+    ],
+    tags: [1, 3, 5]
   },
   {
     id: 2,
@@ -51,7 +52,8 @@ export const recetas = [
       "parrilla del horno freidor por 30 minutos.",
       "Retirar y colocar en un plato.",
       "Se acompaña con ensalada criolla de cebolla o camote y servir."
-    ]
+    ],
+    tags: [2, 4, 6]
   },
   {
     id: 3,
@@ -71,7 +73,8 @@ export const recetas = [
       "Colocar los nuggets en el recipiente para freír sin superponerlos.",
       "Insertarlos en el horno, programar 17 minutos de cocción y presionar el botón de inicio.",
       "Al finalizar, acompañar con papas o arroz."
-    ]
+    ],
+    tags: [7, 9, 11]
   },
   {
     id: 4,
@@ -102,7 +105,8 @@ export const recetas = [
       "Para el relleno, mezclar en otro recipiente el atún, la cebolla y las aceitunas picadas.",
       "En el recipiente donde se armará la causa, colocar una parte de la masa de papa como base, colocar el relleno y cubrir con la masa restante.",
       "Para decorar, rallar el huevo cocido sobre la causa y terminar espolvoreando con perejil picado finamente."
-    ]
+    ],
+    tags: [8, 10, 12]
   },
   {
     id: 5,
@@ -126,7 +130,8 @@ export const recetas = [
       "Para el aderezo, derretir por 30 segundos la mantequilla con los ajos y la pimienta.",
       "Prensar las papas y mezclar con el aderezo y la leche. ",
       "Colocar en el horno microondas por 3 minutos."
-    ]
+    ],
+    tags: [13, 15, 17]
   },
   {
     id: 6,
@@ -158,7 +163,8 @@ export const recetas = [
       "Insertar al horno y cocinar por 26 minutos. Pausar a la mitad del tiempo y añadir media taza de agua fría con maicena, remover y regresar al horno por el tiempo restante de cocción.",
       "Al finalizar, retirar del horno y remover con una cucharita de madera.",
       "Servir en un plato hondo y decorar con galletas o tostadas."
-    ]
+    ],
+    tags: [14, 16, 18]
   },
   {
     id: 7,
@@ -190,7 +196,8 @@ export const recetas = [
       "Agregar las papas cortadas en tajadas y mezclar. Insertar al horno microondas por 7 minutos.",
       "Retirar y agregar leche, huevos y fideos por 2 minutos y medio.",
       "Al término de la cocción, agregar orégano al gusto y acompañarlo con pan o tostadas."
-    ]
+    ],
+    tags: [22, 19, 21]
   },
   {
     id: 8,
@@ -222,7 +229,8 @@ export const recetas = [
       "Llevar al horno microondas y cocinarlo por 38 minutos.",
       "Luego retirar y echar sal, limón al gusto. ",
       "Servir."
-    ]
+    ],
+    tags: [2, 5, 6]
   },
   {
     id: 8,
@@ -254,7 +262,8 @@ export const recetas = [
       "hirviendo y el arroz.",
       "Continuar la cocción por 30 minutos. Pausar a la mitad de la cocción, revolver nuevamente y continuar con el proceso.",
       "Al final incorporar arverjitas y presas de pollo. Dejar reposar antes de servir."
-    ]
+    ],
+    tags: [11, 4, 9]
   },
   {
     id: 9,
@@ -280,7 +289,8 @@ export const recetas = [
       "Ingresar al horno microondas por 12 minutos. Pausar en el minuto 6, voltear y continuar la cocción.",
       "Al terminar, cortar en rodajas y retirar el hilo.",
       "Servir y acompañar con arroz o papas."
-    ]
+    ],
+    tags: [1, 2, 3]
   },
   {
     id: 10,
@@ -315,7 +325,8 @@ export const recetas = [
       "Luego una capa de láminas de lasaña o wantan y agregar la salsa roja con queso Edam. Agregar la carne y encima la salsa blanca con queso mozzarella.",
       "Repetir este procedimiento 3 veces.",
       "En la última capa  agregar el queso parmesano y después llevar al horno microondas entre 15 a  20 minutos, agregar orégano al gusto y servir."
-    ]
+    ],
+    tags: [1, 8, 9]
   },
   {
     id: 11,
@@ -343,7 +354,8 @@ export const recetas = [
       "Luego colocar la papas y habas de tal manera que todos  los complementos queden totalmente bañados por la mezcla.",
       "Cocinar en el horno microondas por 13 minutos en un refractario tapado.",
       "Retirar y añadir hierbabuena o albahaca. Llevar nuevamente al  microondas por 2 minutos más. Servir."
-    ]
+    ],
+    tags: [2, 4, 8]
   },
   {
     id: 12,
@@ -373,7 +385,8 @@ export const recetas = [
       "Colocar el pollo en un recipiente y añadir medio vaso de agua al aderezo.",
       "Llevar al horno microondas por 14 minutos luego retirar y",
       "servir con arroz blanco."
-    ]
+    ],
+    tags: [15, 13, 17]
   },
   {
     id: 13,
@@ -397,7 +410,8 @@ export const recetas = [
       "Para el aderezo, derretir por 30 segundos la mantequilla con los ajos y la pimienta.",
       "Prensar las papas y mezclar con el aderezo y la leche. ",
       "Colocar en el horno microondas por 3 minutos"
-    ]
+    ],
+    tags: [1, 5, 6]
   },
   {
     id: 14,
@@ -431,7 +445,8 @@ export const recetas = [
       "Rectificar el nivel de leche si resulta demasiado espeso para el gusto y mezclar",
       "bien.",
       "Decorar con pasas y canela en polvo. Servir."
-    ]
+    ],
+    tags: [7, 2, 22]
   },
   {
     id: 15,
@@ -462,7 +477,8 @@ export const recetas = [
       "Colocar la mezcla en un refractario plano y enmantequillado.",
       "Insertar en el horno microondas y cocinar por 4 minutos a temperatura alta.",
       "Retirar y esperar a que se enfríe para servir."
-    ]
+    ],
+    tags: [11, 7, 16]
   },
   {
     id: 16,
@@ -488,7 +504,8 @@ export const recetas = [
       "En un bowl batir la leche evaporada, la leche condensada y los huevos, luego colar los ingredientes.",
       "Agregar la vainilla y verter al molde acaramelado. Llevar al horno microondas.",
       "Cocinar por 10 minutos, luego dejar reposar por 15 minutos, desmoldar y  decorar."
-    ]
+    ],
+    tags: [21, 19, 20]
   },
   {
     id: 17,
@@ -517,7 +534,8 @@ export const recetas = [
       "Unir el contenido de ambos recipientes con una cuchara hasta tener una masa homogénea.",
       "Rellenar los moldes e insertarlos en el horno microondas durante 3  minutos.",
       "Retirar los cupcakes del horno microondas, dejar enfriar y decorar al gusto"
-    ]
+    ],
+    tags: [21, 19, 20]
   },
   {
     id: 18,
@@ -546,35 +564,34 @@ export const recetas = [
       "Echar en un recipiente y cocinar en el horno microondas por 16  minutos con potencia 8.",
       "Cubrir la mezcla con las láminas de manzana azucaradas y espolvorear un poco más  de azúcar.",
       "Insertar en el horno microondas por 5 minutos más para un acabado dorado."
-    ]
+    ],
+    tags: [5, 10, 14]
   }
 ];
 
-export const Microondas = {
-  "Causa de atún": [
-    {
-      id: "1",
-      name: "Microondas KOR-40MCS",
-      image:
-        "https://res.cloudinary.com/dkfobbwsu/image/upload/v1575760403/KOR-40MCS_1-min.jpg"
-    },
-    {
-      id: "2",
-      name: "Microondas KOR-208MCB",
-      image:
-        "https://res.cloudinary.com/dkfobbwsu/image/upload/v1575760403/KOR-40MCS_1-min.jpg"
-    },
-    {
-      id: "3",
-      name: "Microondas KOR-208MCS",
-      image:
-        "https://res.cloudinary.com/dkfobbwsu/image/upload/v1575760403/KOR-40MCS_1-min.jpg"
-    },
-    {
-      id: "4",
-      name: "Microondas KOR-GOLD32",
-      image:
-        "https://res.cloudinary.com/dkfobbwsu/image/upload/v1575760403/KOR-40MCS_1-min.jpg"
-    }
-  ]
-};
+export const Microondas = [
+  {
+    id: "1",
+    name: "Microondas KOR-40MCS",
+    image:
+      "https://res.cloudinary.com/dkfobbwsu/image/upload/v1575760403/KOR-40MCS_1-min.jpg"
+  },
+  {
+    id: "2",
+    name: "Microondas KOR-208MCB",
+    image:
+      "https://res.cloudinary.com/dkfobbwsu/image/upload/v1575760403/KOR-40MCS_1-min.jpg"
+  },
+  {
+    id: "3",
+    name: "Microondas KOR-208MCS",
+    image:
+      "https://res.cloudinary.com/dkfobbwsu/image/upload/v1575760403/KOR-40MCS_1-min.jpg"
+  },
+  {
+    id: "4",
+    name: "Microondas KOR-GOLD32",
+    image:
+      "https://res.cloudinary.com/dkfobbwsu/image/upload/v1575760403/KOR-40MCS_1-min.jpg"
+  }
+];

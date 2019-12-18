@@ -13,7 +13,9 @@ export const FoodItem = ({ item }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={handlePress} style={{ marginRight: 10 }}>
+    <TouchableWithoutFeedback
+      onPress={handlePress}
+      style={{ marginRight: 10, height: 160 }}>
       <View
         style={{
           flexDirection: "column",

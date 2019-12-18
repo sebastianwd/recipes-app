@@ -10,7 +10,7 @@ import { SearchScreen } from "../screens/SearchScreen";
 import { RecipeScreen } from "../screens/RecipeScreen";
 import { TipsScreen } from "../screens/TipsScreen";
 import BottomNav from "../components/ui/BottomNav";
-import { ProfileScreen } from "../screens/ProfileScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import { SettingsScreen } from "../screens/SettingsScreen";
 import { FilterScreen } from "../screens/FilterScreen";
 import FavoritesScreen from "../screens/FavoritesScreen";
@@ -31,7 +31,7 @@ const ProfileStack = createStackNavigator(
     initialRouteName: "Profile",
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: "#26263d"
+        backgroundColor: "#E67165"
       },
       headerTintColor: "#fff",
       headerTitleStyle: {
@@ -60,7 +60,7 @@ const HomeStack = createStackNavigator(
     initialRouteName: "Home",
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: "#26263d"
+        backgroundColor: "#E67165"
       },
       headerTintColor: "#fff",
       headerTitleStyle: {
@@ -86,7 +86,7 @@ const FavoritesStack = createStackNavigator(
     initialRouteName: "Favorites",
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: "#26263d"
+        backgroundColor: "#E67165"
       },
       headerTintColor: "#fff",
       headerTitleStyle: {
@@ -106,7 +106,7 @@ const AppStack = createBottomTabNavigator(
           <MaterialIcon
             name={"magnify"}
             size={24}
-            color={`${focused ? "black" : "gray"}`}
+            color={`${focused ? "#E67165" : "gray"}`}
           />
         )
       }
@@ -119,7 +119,7 @@ const AppStack = createBottomTabNavigator(
           <MaterialIcon
             name={"heart"}
             size={24}
-            color={`${focused ? "black" : "gray"}`}
+            color={`${focused ? "#E67165" : "gray"}`}
           />
         )
       }
@@ -131,7 +131,7 @@ const AppStack = createBottomTabNavigator(
           <MaterialIcon
             name={"lightbulb-outline"}
             size={24}
-            color={`${focused ? "black" : "gray"}`}
+            color={`${focused ? "#E67165" : "gray"}`}
           />
         )
       }
@@ -144,7 +144,7 @@ const AppStack = createBottomTabNavigator(
           <MaterialIcon
             name={"account"}
             size={24}
-            color={`${focused ? "black" : "gray"}`}
+            color={`${focused ? "#E67165" : "gray"}`}
           />
         )
       }
@@ -153,9 +153,12 @@ const AppStack = createBottomTabNavigator(
   {
     initialRouteName: "Home",
     tabBarComponent: props => <BottomNav {...props} />,
+    tabBarOptions: {
+      activeTintColor: "black"
+    },
     defaultNavigationOptions: {
       headerStyle: {
-        backgroundColor: "#26263d"
+        backgroundColor: "#E67165"
       },
       headerTintColor: "#fff",
       headerTitleStyle: {

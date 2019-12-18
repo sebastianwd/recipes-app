@@ -15,6 +15,7 @@ import { useStorage } from "../hooks/useStorage";
 import { useTagFilters } from "../hooks/useTagFilters";
 import { withNavigationFocus } from "react-navigation";
 import Carousel from "react-native-snap-carousel";
+import { useRecentSeen } from "../hooks/useRecentSeen";
 
 const { width, height } = Dimensions.get("window");
 
@@ -39,38 +40,74 @@ const renderCarousel = data => (
 const HomeScreen = ({ isFocused }) => {
   const { getFavorites } = useFavorites();
   const { getTagFilters } = useTagFilters();
+  const { getRecentSeen } = useRecentSeen();
   const { storage } = useStorage();
 
   const [filtersNumber, setFiltersNumber] = useState(0);
 
+  const [recipes, setRecipes] = useState(recetas);
+  const [tags, setTags] = useState([]);
+
   useEffect(() => {
     (async () => {
+      const favorites = await getFavorites();
+      if (!favorites) {
+        storage.set("favorites", []);
+      }
+      const recentsSeen = await getRecentSeen();
+      if (!recentsSeen) {
+        storage.set("recentsSeen", []);
+      }
       const filters = await getTagFilters();
       if (!filters) {
         storage.set("filters", []);
         return;
       }
+      setTags(filters.map(filter => filter.id));
       setFiltersNumber(filters.length);
-      const favorites = await getFavorites();
-      if (!favorites) {
-        storage.set("favorites", []);
-      }
     })();
   }, [isFocused]);
+
   const handlePress = () => {
     NavigationService.navigate("Filter");
   };
 
-  const Entradas = recetas.filter(x => x.type === "entrada");
-  const Sopas = recetas.filter(x => x.type === "sopa");
-  const Postres = recetas.filter(x => x.type === "postre");
-  const Platos_Fondo = recetas.filter(x => x.type === "fondo");
+  const filterByTag = recipeTags => {
+    if (tags.length === 0) {
+      return true;
+    }
+    return recipeTags.some(recipeTag => tags.includes(recipeTag));
+  };
+
+  const Entradas = recipes.filter(
+    x => x.type === "entrada" && filterByTag(x.tags)
+  );
+  const Sopas = recipes.filter(x => x.type === "sopa" && filterByTag(x.tags));
+  const Postres = recipes.filter(
+    x => x.type === "postre" && filterByTag(x.tags)
+  );
+  const Platos_Fondo = recipes.filter(
+    x => x.type === "fondo" && filterByTag(x.tags)
+  );
+
+  const handleChangeText = query => {
+    if (!query) {
+      setRecipes(recetas);
+    }
+    setRecipes(
+      recetas.filter(x => x.name.toLowerCase().startsWith(query.toLowerCase()))
+    );
+  };
 
   return (
     <SafeAreaView>
       <ScrollView style={{ position: "relative" }}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Searchbar placeholder='Buscar' style={styles.input} />
+          <Searchbar
+            placeholder='Buscar'
+            style={styles.input}
+            onChangeText={handleChangeText}
+          />
           <TouchableOpacity onPress={handlePress} style={{ marginTop: 4 }}>
             <MaterialIcon name={"tune"} size={32}></MaterialIcon>
           </TouchableOpacity>
@@ -135,7 +172,6 @@ const styles = StyleSheet.create({
     elevation: 4
   },
   slider: {
-    marginTop: 15,
     overflow: "visible" // for custom animations
   },
   sliderContentContainer: {

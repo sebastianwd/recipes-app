@@ -1,4 +1,4 @@
-import React, { useRef, memo, Fragment, useState } from "react";
+import React, { useRef, memo, Fragment, useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import {
   ActivityIndicator,
@@ -30,10 +30,12 @@ const ChipItem = memo(props => {
     await removeTagFilter(item.id);
   };
 
-  (async () => {
-    const found = await findTagFilter(item.id);
-    setActive(!!found);
-  })();
+  useEffect(() => {
+    (async () => {
+      const found = await findTagFilter(item.id);
+      setActive(!!found);
+    })();
+  }, []);
 
   return (
     <TouchableOpacity onPress={() => (isActive ? removeFilter() : addFilter())}>

@@ -16,6 +16,8 @@ import { ProductItem } from "../components/ProductItem";
 import { FoodItem } from "../components/FoodItem";
 import { useFavorites } from "../hooks/useFavorites";
 import { ToastAndroid } from "react-native";
+import { useRecentSeen } from "../hooks/useRecentSeen";
+import { useStorage } from "../hooks/useStorage";
 
 const ShareButton = props => {
   const { shareItem } = props;
@@ -85,7 +87,13 @@ const FavoriteButton = ({ favoriteItem }) => {
 const RecipeScreen = props => {
   const { navigation } = props;
 
+  const { addRecentSeen } = useRecentSeen();
+
   const foodItem = navigation.getParam("item", "");
+
+  const { storage } = useStorage();
+
+  const [shouldPlay, setShouldPlay] = useState(false);
 
   const recipesOfType = recetas.filter(x => x.type === foodItem.type);
 
@@ -94,6 +102,14 @@ const RecipeScreen = props => {
   });
 
   const suggestedRecipes = pickRandom(filteredSuggestions, 4);
+
+  useEffect(() => {
+    addRecentSeen(foodItem);
+
+    (async () => {
+      setShouldPlay(await storage.get("autoplay"));
+    })();
+  }, []);
 
   return (
     <SafeAreaView>
@@ -106,6 +122,7 @@ const RecipeScreen = props => {
             isMuted={false}
             resizeMode='cover'
             useNativeControls={true}
+            shouldPlay={shouldPlay}
             style={{ width: "100%", height: 250 }}
           />
         </View>
@@ -134,7 +151,7 @@ const RecipeScreen = props => {
           <FlatList
             style={{ width: "95%" }}
             horizontal={true}
-            data={Microondas[foodItem.name]}
+            data={Microondas}
             renderItem={ProductItem}
             keyExtractor={item => String(item.id)}
           />
